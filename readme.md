@@ -65,7 +65,7 @@ I've been using Prerender service hosted on my servers for a while now and was u
 composer exec phpunit
 ```
 
-## To DO
+## To Do
 
 Compress gzip saved HTML
 Archive snapshots

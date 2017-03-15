@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hugsbrugs/php-filesystem.git",
-                "reference": "5df11c4caf80d997bf97e4fd01c73fb5d8e081fd"
+                "reference": "25c1f9afec24d934228d5f55784bc12a50916f36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hugsbrugs/php-filesystem/zipball/5df11c4caf80d997bf97e4fd01c73fb5d8e081fd",
-                "reference": "5df11c4caf80d997bf97e4fd01c73fb5d8e081fd",
+                "url": "https://api.github.com/repos/hugsbrugs/php-filesystem/zipball/25c1f9afec24d934228d5f55784bc12a50916f36",
+                "reference": "25c1f9afec24d934228d5f55784bc12a50916f36",
                 "shasum": ""
             },
             "require-dev": {
@@ -36,11 +36,13 @@
             "authors": [
                 {
                     "name": "Hugo Maugey",
-                    "email": "hugo@maugey.fr"
+                    "email": "hugo@maugey.fr",
+                    "homepage": "https://hugo.maugey.fr",
+                    "role": "Developer"
                 }
             ],
             "description": "PHP File System Utilities",
-            "time": "2017-03-13 08:07:29"
+            "time": "2017-03-15 20:37:03"
         },
         {
             "name": "hugsbrugs/php-http",
@@ -48,12 +50,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hugsbrugs/php-http.git",
-                "reference": "42beaea4751d8840996acbdac9bc947346245e4a"
+                "reference": "518de8515ba63cdea968304cf3e77cdcf0c861ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hugsbrugs/php-http/zipball/42beaea4751d8840996acbdac9bc947346245e4a",
-                "reference": "42beaea4751d8840996acbdac9bc947346245e4a",
+                "url": "https://api.github.com/repos/hugsbrugs/php-http/zipball/518de8515ba63cdea968304cf3e77cdcf0c861ee",
+                "reference": "518de8515ba63cdea968304cf3e77cdcf0c861ee",
                 "shasum": ""
             },
             "require": {
@@ -79,7 +81,7 @@
                 }
             ],
             "description": "PHP HTTP Utilities",
-            "time": "2017-03-15 14:18:22"
+            "time": "2017-03-15 20:35:45"
         },
         {
             "name": "layershifter/tld-database",
