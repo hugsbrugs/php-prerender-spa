@@ -12,8 +12,9 @@ $output = __DIR__ .'/../data/';
 // $urls = PrerenderSpa::get_sitemap_urls(__DIR__ . '/../data/sitemap.xml');
 
 $urls = [
-	'https://hugo.maugey.fr/developeur-web/HTML5',
-	'https://hugo.maugey.fr'
+	// 'https://hugo.maugey.fr/developeur-web/HTML5',
+	// 'https://hugo.maugey.fr',
+	'https://hugo.maugey.fr/contact'
 ];
 
 error_log(print_r($urls, true));

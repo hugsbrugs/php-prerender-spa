@@ -20,7 +20,7 @@ use Hug\PrerenderSpa\PrerenderSpa as PrerenderSpa;
 
 ## Usage
 
-### First Step : Generate Your Webpage Snapshots
+### First Step : Generate Your Webpages Snapshots
 ```php
 $prerender_url = 'http://123.123.123.123:3000/';
 $prerender_auth = 'USER:PASSWORD'; // or null

@@ -83,7 +83,7 @@ class PrerenderSpa
 	       		// PrerenderSpa::archive_snapshot($filename)
 
 	            # Save snapshot
-	    		file_put_contents($this->output . 'snapshots' . $url_file, $html);
+	    		file_put_contents($this->output . 'snapshots' . DIRECTORY_SEPARATOR . $url_file, $html);
 	    	}
 
     		# Add execution time to report
@@ -112,8 +112,7 @@ class PrerenderSpa
     	try
         {
 	        $ch = curl_init($url);
-
-	        curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/56.0.2924.76 Chrome/56.0.2924.76 Safari/537.36');
 	        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	        
