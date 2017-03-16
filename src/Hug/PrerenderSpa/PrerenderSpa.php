@@ -37,7 +37,7 @@ class PrerenderSpa
 
         if(!(is_dir($this->output) && is_writable($this->output)))
         {
-        	throw new Exception("Output directory not writable", 1);
+        	throw new \Exception("Output directory not writable", 1);
         }
         else
         {
@@ -139,7 +139,7 @@ class PrerenderSpa
 	        $this->report[$key]['http'] = $retcode;
 	        $this->report[$key]['size'] = FileSystem::human_file_size(strlen($html));
 	    }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
 			$html = false;
         }
@@ -171,7 +171,7 @@ class PrerenderSpa
 	            $filename = 'index';
 	        $filename .= '.html';
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
 			$filename = false;
         }
@@ -204,7 +204,7 @@ class PrerenderSpa
 		        }
 		    }
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
 			$urls = false;
         }
@@ -229,7 +229,7 @@ class PrerenderSpa
 	        $url_file_path = $output . $url_file;
 	        $html = file_get_contents($url_file_path);
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
 			$html = false;
         } 
@@ -257,7 +257,7 @@ class PrerenderSpa
 	        	$saved = true;
 	        }
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
 			$saved = false;
         } 
@@ -278,7 +278,7 @@ class PrerenderSpa
         {
         	$reports = FileSystem::scandir_h($this->output . 'reports', 'json');
         }
-        catch (Exception $e)
+        catch (\Exception $e)
         {
 			$reports = false;
         } 
