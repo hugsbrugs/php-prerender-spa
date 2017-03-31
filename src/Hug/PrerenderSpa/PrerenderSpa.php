@@ -83,7 +83,8 @@ class PrerenderSpa
 	       		// PrerenderSpa::archive_snapshot($filename)
 
 	            # Save snapshot
-	    		file_put_contents($this->output . 'snapshots' . DIRECTORY_SEPARATOR . $url_file, $html);
+	    		// file_put_contents($this->output . 'snapshots' . DIRECTORY_SEPARATOR . $url_file, $html);
+                FileSystem::force_file_put_contents($this->output . 'snapshots' . DIRECTORY_SEPARATOR . $url_file, $html);
 	    	}
 
     		# Add execution time to report
@@ -165,7 +166,8 @@ class PrerenderSpa
 	        // error_log('domain : ' . $domain);
 	        // error_log('scheme : ' . $scheme);
 
-	        $filename = trim(str_replace([$scheme, $domain, '/'], ['', '', '-'], $url), '-');
+	        // $filename = trim(str_replace([$scheme, $domain, '/'], ['', '', '-'], $url), '-');
+            $filename = trim(str_replace([$scheme, $domain], ['', ''], $url), '-');
 
 	        if($filename==='')
 	            $filename = 'index';

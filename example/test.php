@@ -6,6 +6,10 @@ use Hug\PrerenderSpa\PrerenderSpa as PrerenderSpa;
 
 $prerender_url = 'http://123.123.123.123:3000/';
 $prerender_auth = 'USER:PASS';
+
+$prerender_url = 'http://localhost:3000/';
+$prerender_auth = null;
+
 $output = __DIR__ .'/../data/';
 
 
@@ -13,8 +17,8 @@ $output = __DIR__ .'/../data/';
 // $urls = PrerenderSpa::get_sitemap_urls(__DIR__ . '/../data/sitemap.xml');
 
 $urls = [
-	// 'https://hugo.maugey.fr/developeur-web/HTML5',
-	// 'https://hugo.maugey.fr',
+	'https://hugo.maugey.fr/developeur-web/HTML5',
+	'https://hugo.maugey.fr',
 	'https://hugo.maugey.fr/contact'
 ];
 
@@ -25,6 +29,13 @@ $PrerenderSpa = new PrerenderSpa($urls, $output, $prerender_url, $prerender_auth
 $PrerenderSpa->prerender();
 
 error_log(print_r($PrerenderSpa->report, true));
+
+# Check snapshots (à améliorer -> tester la présence d'une balise)
+// foreach ($urls as $key => $url)
+// {
+// 	$snapshot = PrerenderSpa::get_snapshot($url, $output);
+// 	error_log($snapshot);
+// }
 
 
 # Get Your Personnalized 404
