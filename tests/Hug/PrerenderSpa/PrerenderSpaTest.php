@@ -81,11 +81,11 @@ final class PrerenderSpaTest extends TestCase
 
         $test = PrerenderSpa::url_to_filename('https://hugo.maugey.fr/developeur-web/Geocoding');
         $this->assertInternalType('string', $test);
-        $this->assertEquals('developeur-web-Geocoding.html', $test);
+        $this->assertEquals('/developeur-web/Geocoding.html', $test);
 
         $test = PrerenderSpa::url_to_filename('https://hugo.maugey.fr/conversion/entités-html');
         $this->assertInternalType('string', $test);
-        $this->assertEquals('conversion-entités-html.html', $test);
+        $this->assertEquals('/conversion/entités-html.html', $test);
     }
 
     /* ************************************************* */

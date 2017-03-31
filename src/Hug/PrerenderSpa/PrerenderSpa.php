@@ -175,6 +175,7 @@ class PrerenderSpa
         }
         catch (\Exception $e)
         {
+            error_log($e->getMessage());
 			$filename = false;
         }
 
