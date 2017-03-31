@@ -28,7 +28,7 @@ $http_code = null;
 try
 {
 	# Get Snapshot
-	if(false !== $snapshot = PrerenderSpa::get_snapshot($url, $output)
+	if(false !== $snapshot = PrerenderSpa::get_snapshot($url, $output))
 	{
 		$http_code = 200;
 		$html = $snapshot;
@@ -43,7 +43,7 @@ try
 	# Log Snapshot Request to analyse traffic
 	if($log)
 	{
-		$ip = $_REQUEST['REMOTE_ADDR'];
+		$ip = $_SERVER['REMOTE_ADDR'];
 		$ua = $_SERVER['HTTP_USER_AGENT'];
 		PrerenderSpa::log_snapshot($ip, $ua, $url, $http_code, $output);
 	}
