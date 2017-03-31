@@ -39,7 +39,12 @@ $PrerenderSpa->prerender();
 # Wait ....
 # Print Report
 error_log(print_r($PrerenderSpa->report, true));
-# Checkout for 404
+# Set Your Personnalized 404
+$html = 'My Personalized 404';
+PrerenderSpa::set_404($html, $output);
+# Set Your Personnalized 500
+$html = 'My Personalized 500';
+PrerenderSpa::set_500($html, $output);
 ```
 
 ### Second Step : Serve Webpage Snapshots to web crawlers
@@ -51,6 +56,44 @@ Redirect search engine crawlers to prerender.php service
     RewriteRule ^(?!.*?(\.js|\.css|\.xml|\.less|\.png|\.jpg|\.jpeg|\.gif|\.pdf|\.doc|\.txt|\.ico|\.rss|\.zip|\.mp3|\.rar|\.exe|\.wmv|\.doc|\.avi|\.ppt|\.mpg|\.mpeg|\.tif|\.wav|\.mov|\.psd|\.ai|\.xls|\.mp4|\.m4a|\.swf|\.dat|\.dmg|\.iso|\.flv|\.m4v|\.torrent|\.ttf|\.woff))(index\.php)?(.*) /prerender.php/https://hugo.maugey.fr/$3 [P,L]
 </IfModule>
 ```
+
+Have a look at [prerender.php](example/prerender.php)
+```php
+# Where do you store prerender filesystem
+$output = __DIR__ . '/../data/';
+
+# .htaccess http://prerender.io/URL_TO_SNAP
+$url = $_REQUEST['URL'];
+
+$html = null;
+$http_code = null;
+
+try
+{
+	# Get Snapshot
+	if(false !== $snapshot = PrerenderSpa::get_snapshot($url, $output)
+	{
+		$http_code = 200;
+		$html = $snapshot;
+	}
+	else
+	{
+		# Set Header status 404 Not Found
+		$http_code = 404;
+		$html = PrerenderSpa::get_404($output);
+	}
+
+}
+catch(\Exception $e)
+{
+	$http_code = 500;
+	$html = PrerenderSpa::get_500($output);
+}
+
+Http::header_status($http_code);
+echo $html;
+```
+
 
 ### Third Step : Generate Snapshot On Demand
 Repeat First Step by providing only URLs whose content has changed to optimize server from running headless browser snapshot service for nothing.
@@ -69,7 +112,6 @@ composer exec phpunit
 
 Compress gzip saved HTML
 Archive snapshots
-Log search engine visits
 
 ## Author
 

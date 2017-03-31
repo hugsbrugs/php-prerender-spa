@@ -191,18 +191,25 @@ class PrerenderSpa
 	
 		try
 		{
-	        $sitemap = file_get_contents($filename);
-	        if($sitemap!==false)
-	        {
-		        $xml = new \SimpleXMLElement($sitemap);
-		        
-		        $urls = [];
+            if(is_file($filename) && is_readable($filename))
+            {
+    	        $sitemap = file_get_contents($filename);
+    	        if($sitemap!==false)
+    	        {
+    		        $xml = new \SimpleXMLElement($sitemap);
+    		        
+    		        $urls = [];
 
-		        foreach ($xml->url as $url_list)
-		        {
-		            $urls[] = (string)$url_list->loc;
-		        }
-		    }
+    		        foreach ($xml->url as $url_list)
+    		        {
+    		            $urls[] = (string)$url_list->loc;
+    		        }
+    		    }
+            }
+            else
+            {
+                error_log('PrerenderSpa get_sitemap_urls : ' . $filename . ' does not exist or is not writable ! ');
+            }
         }
         catch (\Exception $e)
         {
@@ -221,13 +228,20 @@ class PrerenderSpa
      */
     public static function get_snapshot($url, $output)
     {
-        $html = '';
+        $html = false;
 
         try
         {
         	$url_file = PrerenderSpa::url_to_filename($url);
-	        $url_file_path = $output . $url_file;
-	        $html = file_get_contents($url_file_path);
+	        $url_file_path = $output . 'snapshots' . DIRECTORY_SEPARATOR . $url_file;
+            if(is_file($url_file_path) && is_readable($url_file_path))
+            {
+    	        $html = file_get_contents($url_file_path);
+            }
+            else
+            {
+                error_log('PrerenderSpa get_snapshot : File ' . $url_file_path . ' does not exist or not readable !');
+            }
         }
         catch (\Exception $e)
         {
@@ -235,6 +249,54 @@ class PrerenderSpa
         } 
         
         return $html;
+    }
+
+    /**
+     * Log Snap Shot Request And by whom
+     *
+     * @param string $ip
+     * @param string $useragent
+     * @param string $url
+     * @param string $http_code
+     * @return bool $log
+     */
+    public static function log_snapshot($ip, $ua, $url, $http_code, $output)
+    {
+        $log = false;
+
+        try
+        {
+            $date = new \DateTime('now');
+            $today = $date->format('d-m-Y');
+            $now = $date->format('d-m-Y H:i:s');
+            
+            $today_log = $output . 'logs' . DIRECTORY_SEPARATOR . 'snapshot-'.$today.'.log';
+            
+            if(!is_file($today_log))
+            {
+                file_put_contents($today_log, '');
+            }
+
+            if(is_file($today_log) && is_readable($today_log))
+            {
+                $log_line = $now.';'.$ip.';'.$url.';'.$http_code.';'.$ua."\n";
+                
+                if(file_put_contents($today_log, $log_line, FILE_APPEND)!==false)
+                {
+                    $log = true;
+                }
+            }
+            else
+            {
+                error_log('PrerenderSpa log_snapshot : File ' . $today_log . ' does not exist or not readable !');
+            }
+        }
+        catch (\Exception $e)
+        {
+            $log = false;
+        } 
+        
+        return $log;
     }
 
     /**
@@ -286,6 +348,144 @@ class PrerenderSpa
         return $reports;
     }
 
+    /**
+     * Set Custom 404 page
+     *
+     * @param string $html
+     * @param string $output
+     * @return bool $saved 
+     */
+    public static function set_404($html, $output)
+    {
+        $saved = false;
+
+        $filename = $output . '404.html';
+        try
+        {
+            if(file_put_contents($filename, $html)!==false)
+            {
+                $saved = true;
+            }
+        }
+        catch(\Exception $e)
+        {
+            error_log('PrerenderSpa set_404 : ' . $e->getMessage());
+        }
+
+        return $saved;
+    }
+
+    /**
+     * Get Custom or default 404 page
+     *
+     * @param string $output
+     * @return string $_404 
+     */
+    public static function get_404($output)
+    {
+        $_404 = '';
+        $filename = $output . '404.html';
+        if(is_file($filename) && is_readable($filename))
+        {
+            $_404 = file_get_contents($filename);
+        }
+        else
+        {
+            $_404 = PrerenderSpa::get_default_404();
+        }
+        return $_404;
+    }
+
+    /**
+     * Get Default 404 page
+     *
+     * @return string $_404 
+     */
+    public static function get_default_404()
+    {
+        $_404 = <<<'LABEL'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>404</title>
+</head>
+<body>
+404
+</body>
+</html>
+LABEL;
+        return $_404;
+    }
+
+    /**
+     * Set Custom 500 page
+     *
+     * @param string $html
+     * @param string $output
+     * @return bool $saved 
+     */
+    public static function set_500($html, $output)
+    {
+        $saved = false;
+
+        $filename = $output . '500.html';
+        try
+        {
+            if(file_put_contents($filename, $html)!==false)
+            {
+                $saved = true;
+            }
+        }
+        catch(\Exception $e)
+        {
+            error_log('PrerenderSpa set_500 : ' . $e->getMessage());
+        }
+
+        return $saved;
+    }
+
+    /**
+     * Get Custom or default 500 page
+     *
+     * @param string $output
+     * @return string $_500 
+     */
+    public static function get_500($output)
+    {
+        $_500 = '';
+        $filename = $output . '500.html';
+        if(is_file($filename) && is_readable($filename))
+        {
+            $_500 = file_get_contents($filename);
+        }
+        else
+        {
+            $_500 = PrerenderSpa::get_default_500();
+        }
+        return $_500;
+    }
+
+    /**
+     * Get Default 500 page
+     *
+     * @return string $_500 
+     */
+    public static function get_default_500()
+    {
+            $_500 = <<<'LABEL'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>500</title>
+</head>
+<body>
+500
+</body>
+</html>
+LABEL;
+        return $_500;
+    }
+
 
     /**
      * Archive older file (for recovery or comparison)
@@ -297,4 +497,5 @@ class PrerenderSpa
         {
         }
     }*/
+
 }
